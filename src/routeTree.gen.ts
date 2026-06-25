@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StateAnalysisRouteImport } from './routes/state-analysis'
 import { Route as ClimateTrendsRouteImport } from './routes/climate-trends'
+import { Route as ClimateAlertsRouteImport } from './routes/climate-alerts'
 import { Route as AiPredictionRouteImport } from './routes/ai-prediction'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const StateAnalysisRoute = StateAnalysisRouteImport.update({
 const ClimateTrendsRoute = ClimateTrendsRouteImport.update({
   id: '/climate-trends',
   path: '/climate-trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClimateAlertsRoute = ClimateAlertsRouteImport.update({
+  id: '/climate-alerts',
+  path: '/climate-alerts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AiPredictionRoute = AiPredictionRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-prediction': typeof AiPredictionRoute
+  '/climate-alerts': typeof ClimateAlertsRoute
   '/climate-trends': typeof ClimateTrendsRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-prediction': typeof AiPredictionRoute
+  '/climate-alerts': typeof ClimateAlertsRoute
   '/climate-trends': typeof ClimateTrendsRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
@@ -51,18 +59,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-prediction': typeof AiPredictionRoute
+  '/climate-alerts': typeof ClimateAlertsRoute
   '/climate-trends': typeof ClimateTrendsRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ai-prediction' | '/climate-trends' | '/state-analysis'
+  fullPaths:
+    | '/'
+    | '/ai-prediction'
+    | '/climate-alerts'
+    | '/climate-trends'
+    | '/state-analysis'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai-prediction' | '/climate-trends' | '/state-analysis'
+  to:
+    | '/'
+    | '/ai-prediction'
+    | '/climate-alerts'
+    | '/climate-trends'
+    | '/state-analysis'
   id:
     | '__root__'
     | '/'
     | '/ai-prediction'
+    | '/climate-alerts'
     | '/climate-trends'
     | '/state-analysis'
   fileRoutesById: FileRoutesById
@@ -70,6 +90,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiPredictionRoute: typeof AiPredictionRoute
+  ClimateAlertsRoute: typeof ClimateAlertsRoute
   ClimateTrendsRoute: typeof ClimateTrendsRoute
   StateAnalysisRoute: typeof StateAnalysisRoute
 }
@@ -88,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/climate-trends'
       fullPath: '/climate-trends'
       preLoaderRoute: typeof ClimateTrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/climate-alerts': {
+      id: '/climate-alerts'
+      path: '/climate-alerts'
+      fullPath: '/climate-alerts'
+      preLoaderRoute: typeof ClimateAlertsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-prediction': {
@@ -110,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiPredictionRoute: AiPredictionRoute,
+  ClimateAlertsRoute: ClimateAlertsRoute,
   ClimateTrendsRoute: ClimateTrendsRoute,
   StateAnalysisRoute: StateAnalysisRoute,
 }
