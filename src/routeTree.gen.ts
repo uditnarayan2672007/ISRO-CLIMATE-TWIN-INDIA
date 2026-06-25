@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StateAnalysisRouteImport } from './routes/state-analysis'
+import { Route as ClimateTrendsRouteImport } from './routes/climate-trends'
 import { Route as IndexRouteImport } from './routes/index'
 
 const StateAnalysisRoute = StateAnalysisRouteImport.update({
   id: '/state-analysis',
   path: '/state-analysis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClimateTrendsRoute = ClimateTrendsRouteImport.update({
+  id: '/climate-trends',
+  path: '/climate-trends',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/climate-trends': typeof ClimateTrendsRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/climate-trends': typeof ClimateTrendsRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/climate-trends': typeof ClimateTrendsRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/state-analysis'
+  fullPaths: '/' | '/climate-trends' | '/state-analysis'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/state-analysis'
-  id: '__root__' | '/' | '/state-analysis'
+  to: '/' | '/climate-trends' | '/state-analysis'
+  id: '__root__' | '/' | '/climate-trends' | '/state-analysis'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClimateTrendsRoute: typeof ClimateTrendsRoute
   StateAnalysisRoute: typeof StateAnalysisRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/state-analysis'
       fullPath: '/state-analysis'
       preLoaderRoute: typeof StateAnalysisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/climate-trends': {
+      id: '/climate-trends'
+      path: '/climate-trends'
+      fullPath: '/climate-trends'
+      preLoaderRoute: typeof ClimateTrendsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClimateTrendsRoute: ClimateTrendsRoute,
   StateAnalysisRoute: StateAnalysisRoute,
 }
 export const routeTree = rootRouteImport
