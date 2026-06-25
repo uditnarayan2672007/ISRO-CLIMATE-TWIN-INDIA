@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StateAnalysisRouteImport } from './routes/state-analysis'
+import { Route as SimulatorRouteImport } from './routes/simulator'
 import { Route as ClimateTrendsRouteImport } from './routes/climate-trends'
 import { Route as ClimateAlertsRouteImport } from './routes/climate-alerts'
 import { Route as AiPredictionRouteImport } from './routes/ai-prediction'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const StateAnalysisRoute = StateAnalysisRouteImport.update({
   id: '/state-analysis',
   path: '/state-analysis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimulatorRoute = SimulatorRouteImport.update({
+  id: '/simulator',
+  path: '/simulator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClimateTrendsRoute = ClimateTrendsRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/ai-prediction': typeof AiPredictionRoute
   '/climate-alerts': typeof ClimateAlertsRoute
   '/climate-trends': typeof ClimateTrendsRoute
+  '/simulator': typeof SimulatorRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/ai-prediction': typeof AiPredictionRoute
   '/climate-alerts': typeof ClimateAlertsRoute
   '/climate-trends': typeof ClimateTrendsRoute
+  '/simulator': typeof SimulatorRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/ai-prediction': typeof AiPredictionRoute
   '/climate-alerts': typeof ClimateAlertsRoute
   '/climate-trends': typeof ClimateTrendsRoute
+  '/simulator': typeof SimulatorRoute
   '/state-analysis': typeof StateAnalysisRoute
 }
 export interface FileRouteTypes {
@@ -70,6 +79,7 @@ export interface FileRouteTypes {
     | '/ai-prediction'
     | '/climate-alerts'
     | '/climate-trends'
+    | '/simulator'
     | '/state-analysis'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -77,6 +87,7 @@ export interface FileRouteTypes {
     | '/ai-prediction'
     | '/climate-alerts'
     | '/climate-trends'
+    | '/simulator'
     | '/state-analysis'
   id:
     | '__root__'
@@ -84,6 +95,7 @@ export interface FileRouteTypes {
     | '/ai-prediction'
     | '/climate-alerts'
     | '/climate-trends'
+    | '/simulator'
     | '/state-analysis'
   fileRoutesById: FileRoutesById
 }
@@ -92,6 +104,7 @@ export interface RootRouteChildren {
   AiPredictionRoute: typeof AiPredictionRoute
   ClimateAlertsRoute: typeof ClimateAlertsRoute
   ClimateTrendsRoute: typeof ClimateTrendsRoute
+  SimulatorRoute: typeof SimulatorRoute
   StateAnalysisRoute: typeof StateAnalysisRoute
 }
 
@@ -102,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/state-analysis'
       fullPath: '/state-analysis'
       preLoaderRoute: typeof StateAnalysisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulator': {
+      id: '/simulator'
+      path: '/simulator'
+      fullPath: '/simulator'
+      preLoaderRoute: typeof SimulatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/climate-trends': {
@@ -140,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiPredictionRoute: AiPredictionRoute,
   ClimateAlertsRoute: ClimateAlertsRoute,
   ClimateTrendsRoute: ClimateTrendsRoute,
+  SimulatorRoute: SimulatorRoute,
   StateAnalysisRoute: StateAnalysisRoute,
 }
 export const routeTree = rootRouteImport
